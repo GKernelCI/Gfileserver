@@ -1,0 +1,25 @@
+server {
+    listen       ${VIRTUAL_PORT} default_server sndbuf=32k;
+    server_name  ${VIRTUAL_HOST};
+
+    include /etc/nginx/default.d/*.conf;
+
+    location / {
+        root   /var/www/static;
+        autoindex on;
+    }
+
+    location /_stats {
+        stub_status on;
+    }
+
+    error_page  404              /404.html;
+    location = /404.html {
+        root   /usr/share/nginx/html;
+    }
+
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+}
